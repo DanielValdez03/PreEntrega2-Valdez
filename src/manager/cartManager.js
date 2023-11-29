@@ -1,5 +1,7 @@
 import { promises as fs } from "fs";
 import { nanoid } from "nanoid";
+import { ProducManager } from "../manager/productManager.js";
+const managerProd = new ProducManager
 class CartManager {
     constructor(){
         this.path = "./src/modules/carritos.json"
@@ -34,8 +36,25 @@ class CartManager {
            }
            return carritoById
       }
-      async agregarProdEnCarr(prodId, cartId){
+      async agregarProdEnCarr( cartId, prodId){
+let carritoPorId = await this.buscadorPorId(cartId)
+if(!carritoPorId){return "no existe este carrito"}
+let productoPorId = await managerProd.buscadorPorId(prodId)
+if(!productoPorId) {return "este producto no existe"}
 
+let totalCarritos = await this.lectorCarritos()
+let carritosfiltrados = totalCarritos.filter((carr)=> carr.id != cartId)
+
+if(carritoPorId.productos.some((prod)=> prod.id === prodId)){
+  let productoEnCarrito = carritoPorId.productos.find((prod)=> prod.id === prodId)
+  productoEnCarrito.cantidad += 1
+  let carritoActualizado = [productoEnCarrito, ...carritosfiltrados]
+  await this.escritorCarritos(carritoActualizado)
+  return "se agrego + 1 al carrito"
+}
+let carritoActualizado = [{id : cartId, productos : [{id : productoPorId.id, cantidad: 1, }]} , ...carritosfiltrados]
+  await this.escritorCarritos(carritoActualizado)
+  return "se agrego el producto al carrito"
       }
 }
 

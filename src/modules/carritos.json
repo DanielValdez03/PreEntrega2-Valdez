@@ -1,7 +1,7 @@
 [
   {
-    "id": "rB0N_BoLMv6q-dVo4MJlr",
-    "productos": []
+    "id": "8H0Lnf_3-YzDys0KsZLY3",
+    "cantidad": 2
   },
   {
     "id": "t_SiKzPSpGjQiX9ebQsgo",
@@ -9,7 +9,9 @@
   },
   {
     "id": "3aSHpkPtqKTy80cA-OYJ9",
-    "productos": ["h"]
+    "productos": [
+      "h"
+    ]
   },
   {
     "id": "TI3tFc2nhC7rmVKVx_FJk",

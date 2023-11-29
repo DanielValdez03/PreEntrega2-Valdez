@@ -15,7 +15,16 @@ ProductosRouter.get("/:id", async (req, res) => {
 })
 // Metdo Post el cual agregará un producto y actualizará nuestra lista de productos
 ProductosRouter.post("/", async (req, res) => {
-  let productoNuevo = req.body;
+  const productoNuevo = {
+    title: req.body.title,
+    description: req.body.description,
+    code: req.body.code,
+    price: req.body.price,
+    status: req.body.status || true,
+    stock: req.body.stock,
+    category: req.body.category,
+    thumbnails: req.body.thumbnails || [],
+  };
   res.send(await manager.agregarProducto(productoNuevo));
 });
 //Metodo PUT con el que actualizaremos un producto ya existente en nuestro listado

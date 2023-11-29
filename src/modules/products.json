@@ -1,7 +1,24 @@
 [
   {
-    "nombre": "joaquin",
-    "apellido": "garcia",
-    "id": "JDYKPveVGqZL6eGf2YqjO"
+    "title": "producto1",
+    "description": "description1",
+    "code": "abc123",
+    "price": 100,
+    "status": true,
+    "stock": 10,
+    "category": "none",
+    "thumbnails": [],
+    "id": "8H0Lnf_3-YzDys0KsZLY3"
+  },
+  {
+    "title": "producto2",
+    "description": "description2",
+    "code": "abc223",
+    "price": 200,
+    "status": true,
+    "stock": 20,
+    "category": "none",
+    "thumbnails": [],
+    "id": "PWAu6KWa0oiGLGe8i-hHg"
   }
 ]
