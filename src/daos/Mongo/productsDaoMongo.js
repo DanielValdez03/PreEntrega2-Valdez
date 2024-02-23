@@ -5,23 +5,23 @@ class ProductDaoMongo {
     this.model = productModel;
   }
 
-  async getProducts() {
+  async get() {
     return this.model.find({});
   }
 
-  async getProductById(pid) {
-    return this.model.findOne({ _id: pid });
+  async getBy(filter) {
+    return this.model.findOne(filter);
   }
 
-  async createProduct(newProduct) {
+  async create(newProduct) {
     return this.model.create(newProduct);
   }
 
-  async updateProduct(pid, updatedProduct) {
+  async update(pid, updatedProduct) {
     return this.model.updateOne({ _id: pid }, updatedProduct);
   }
 
-  async deleteProduct(pid) {
+  async delete(pid) {
     return this.model.deleteOne({ _id: pid });
   }
 }

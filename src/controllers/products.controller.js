@@ -1,12 +1,12 @@
-import { Router } from "express";
-import ProductDaoMongo from "../daos/Mongo/productsDaoMongo.js";
 import productModel from "../daos/Mongo/models/products.model.js";
+import ProductDaoMongo from "../daos/Mongo/productsDaoMongo.js";
 
-const productRouter = Router();
-const productService = new ProductDaoMongo();
+class ProductController {
+  constructor() {
+    this.productManager = new ProductDaoMongo();
+  }
 
-productRouter
-  .get("/", async (req, res) => {
+  getProducts = async (req, res) => {
     try {
       const { numPage } = req.query;
       const {
@@ -39,12 +39,12 @@ productRouter
         message: "Error interno del servidor al obtener productos.",
       });
     }
-  })
+  };
 
-  .get("/:pid", async (req, res) => {
+  getProductById = async (req, res) => {
     try {
-      const { pid } = req.params;
-      const products = await productService.getProductById(pid);
+      const { filter } = req.params;
+      const products = await this.productManager.getBy(filter);
       res.send(products);
     } catch (error) {
       console.error("Error al obtener producto por ID:", error);
@@ -53,9 +53,9 @@ productRouter
         message: "Error interno del servidor al obtener producto por ID.",
       });
     }
-  })
+  };
 
-  .post("/", async (req, res) => {
+  createProduct = async (req, res) => {
     try {
       const newProduct = req.body;
       if (
@@ -73,7 +73,7 @@ productRouter
         });
       }
 
-      const result = await productService.createProduct(newProduct);
+      const result = await this.productManager.create(newProduct);
 
       res.send({
         status: "success",
@@ -86,9 +86,9 @@ productRouter
         message: "Error interno del servidor al crear un nuevo producto.",
       });
     }
-  })
+  };
 
-  .put("/:pid", async (req, res) => {
+  updateProduct = async (req, res) => {
     try {
       const { pid } = req.params;
       const updatedProduct = req.body;
@@ -107,7 +107,7 @@ productRouter
         });
       }
 
-      const newProduct = await productService.updateProduct(
+      const newProduct = await this.productManager.update(
         pid,
         updatedProduct
       );
@@ -123,12 +123,12 @@ productRouter
         message: "Error interno del servidor al actualizar el producto.",
       });
     }
-  })
+  };
 
-  .delete("/:pid", async (req, res) => {
+  deleteProduct = async (req, res) => {
     try {
       const { pid } = req.params;
-      await productService.deleteProduct(pid);
+      await this.productManager.delete(pid);
       res.send("Producto Eliminado");
     } catch (error) {
       console.error("Error al eliminar producto:", error);
@@ -137,6 +137,7 @@ productRouter
         message: "Error interno del servidor al eliminar el producto.",
       });
     }
-  });
+  };
+}
 
-export default productRouter;
+export default ProductController
